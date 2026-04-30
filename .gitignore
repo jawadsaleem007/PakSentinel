@@ -35,3 +35,7 @@ data/embeddings/v1.0/
 
 # Build outputs
 *.pdf
+
+# Documentation files (excluded per request)
+*.md
+*.docx
