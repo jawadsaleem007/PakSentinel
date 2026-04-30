@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Logs and outputs
+logs/
+*.log
+
+# Large local-only artifacts (re-downloaded inside the container)
+mlruns/.trash/
+data/raw/20260428_053749/
+data/raw/20260428_053750/
+data/processed/v1.0/
+data/embeddings/v1.0/
+
+# Reports / media not needed at runtime
+reports/
+*.docx
+*.pdf
+*.mp4
+*.webp
+
+# CI / docs
+README.md
+.github/
+notebooks/

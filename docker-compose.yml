@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # MinIO Object Storage (S3-compatible)
   minio:
@@ -16,30 +14,30 @@ services:
       - minio_data:/data
     healthcheck:
       test: ["CMD", "mc", "ready", "local"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-
-  # MLFlow Tracking Server
-  mlflow:
-    image: python:3.11-slim
-    container_name: paksentinel-mlflow
-    ports:
-      - "5000:5000"
-    working_dir: /app
-    volumes:
-      - ./mlruns:/app/mlruns
-      - mlflow_artifacts:/app/artifacts
-    command: >
-      bash -c "pip install mlflow && 
-               mlflow server --host 0.0.0.0 --port 5000 
-               --backend-store-uri file:///app/mlruns 
-               --default-artifact-root /app/artifacts"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
       interval: 10s
       timeout: 5s
       retries: 5
+
+  # MLFlow Tracking Server (uses official image — no install at runtime)
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.16.2
+    container_name: paksentinel-mlflow
+    ports:
+      - "5000:5000"
+    volumes:
+      - mlflow_data:/mlflow
+    command: >
+      mlflow server
+      --host 0.0.0.0
+      --port 5000
+      --backend-store-uri sqlite:////mlflow/mlflow.db
+      --default-artifact-root /mlflow/artifacts
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request,sys;sys.exit(0 if urllib.request.urlopen('http://localhost:5000/health',timeout=3).status==200 else 1)\""]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
 
   # PakSentinel FastAPI Application
   paksentinel-api:
@@ -57,13 +55,21 @@ services:
       MLFLOW_TRACKING_URI: http://mlflow:5000
     volumes:
       - ./data:/app/data
-      - ./mlruns:/app/mlruns
       - ./logs:/app/logs
     depends_on:
       minio:
         condition: service_healthy
-    command: uvicorn api.app:app --host 0.0.0.0 --port 8000
+      mlflow:
+        condition: service_started
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
 
 volumes:
   minio_data:
-  mlflow_artifacts:
+  mlflow_data:
+
