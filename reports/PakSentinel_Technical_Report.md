@@ -187,7 +187,9 @@ The differential distribution of negation words across classes confirms they are
 #### 4.5.1 Bag of Words [3 Marks]
 
 - Matrix: 9,891 × 10,000 (sparsity: 99.92%)
-- Top 30 terms per class plotted in `bow_top30_terms.png`
+- Top 30 terms per class:
+
+![BoW Top 30 Terms per Class](figures/bow_top30_terms.png)
 
 **Mathematical limitation of BoW for misinformation detection:**
 1. **Loss of word order:** BoW(d) = BoW(π(d)) for any permutation π — "Pakistan did NOT deny" and "Pakistan denied" produce identical vectors
@@ -220,7 +222,15 @@ Three variants implemented: Standard, Smooth IDF, and Sublinear TF. All produce 
 | (claim, allegation) | 0.995 | 0.744 |
 | (investigation, probe) | 0.997 | 0.960 |
 
-**t-SNE visualizations** saved as `word2vec_cbow_t_sne.png` and `word2vec_skip_gram_t_sne.png`.
+**t-SNE visualizations (perplexity=30):**
+
+![Word2Vec CBOW t-SNE](figures/word2vec_cbow_t_sne.png)
+
+*CBOW embedding projection — semantically related terms cluster together.*
+
+![Word2Vec Skip-gram t-SNE](figures/word2vec_skip_gram_t_sne.png)
+
+*Skip-gram embedding projection — sharper local clusters than CBOW.*
 
 **Feature comparison (classification F1):**
 
@@ -286,6 +296,10 @@ Implemented Multinomial Naive Bayes from scratch (no sklearn). Features: configu
 
 **Misclassification analysis (30 samples):** TOPIC_OVERLAP: 77%, SHORT_TEXT: 23%. Most errors occur when Fake/Real articles share celebrity or political topics, making lexical features insufficient for discrimination.
 
+![Naive Bayes Confusion Matrix](figures/nb_confusion_matrix.png)
+
+*Confusion matrix on 20% held-out test set (BoW features, α=0.5).*
+
 **Alpha sensitivity analysis:**
 
 | Alpha | Accuracy | F1 |
@@ -298,6 +312,10 @@ Implemented Multinomial Naive Bayes from scratch (no sklearn). Features: configu
 | 5.00 | 0.6448 | 0.6478 |
 
 Optimal alpha = 0.5, balancing underfitting (low alpha) and over-smoothing (high alpha).
+
+![Naive Bayes Alpha Sensitivity](figures/nb_alpha_sensitivity.png)
+
+*Alpha sensitivity curve — peak F1 at α=0.5, smooth degradation either side.*
 
 ### 6.2 Logistic Regression [9 Marks]
 
@@ -313,7 +331,19 @@ L2 performs best — retains all features with distributed weights rather than a
 
 **Top weighted features (L2, Fake class):** jenner (+2.48), say (+2.35), brad (+2.21), pitt (+2.20), kardashian (+2.05)
 
-**ROC curves** plotted for all three variants with per-class AUC in `lr_roc_curves.png`.
+**ROC curves for L1, L2, and ElasticNet variants** with per-class AUC:
+
+![Logistic Regression ROC Curves](figures/lr_roc_curves.png)
+
+![Logistic Regression L2 ROC](figures/roc_LogisticRegression_L2.png)
+
+*Per-class ROC curves for the best variant (L2). AUC ≥ 0.80 for all three classes.*
+
+**Confusion matrices:**
+
+![LR Confusion Matrix (all variants)](figures/lr_confusion_matrix.png)
+
+![LR L2 Confusion Matrix](figures/cm_LogisticRegression_L2.png)
 
 **Why LR handles correlated features better than NB (250 words):**
 
@@ -331,7 +361,11 @@ TF-IDF reduced to 2D via PCA (explained variance: 0.8%).
 | 2 | 0.3416 | 0.3466 | 0.3211 | 5 |
 | 3 | 0.3413 | 0.3461 | 0.3215 | 9 |
 
-Low performance reflects PCA's extreme dimensionality reduction (0.8% variance retained). Decision boundaries plotted in `polynomial_decision_boundaries.png`.
+Low performance reflects PCA's extreme dimensionality reduction (0.8% variance retained). Decision boundaries:
+
+![Polynomial LR Decision Boundaries](figures/polynomial_decision_boundaries.png)
+
+*Degree 1 = linear; degree 2/3 introduce curved boundaries but minimal F1 gain because PCA-2D retains only 0.8% variance.*
 
 **Feature space explosion:** Degree-2 on full 10,000-dim TF-IDF → C(10002, 2) - 1 = **50,015,000** features — computationally infeasible.
 
