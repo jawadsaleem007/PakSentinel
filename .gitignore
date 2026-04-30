@@ -39,3 +39,4 @@ data/embeddings/v1.0/
 # Documentation files (excluded per request)
 *.md
 *.docx
+!README.md
