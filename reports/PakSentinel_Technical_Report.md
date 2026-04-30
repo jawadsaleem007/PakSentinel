@@ -487,6 +487,8 @@ Three models registered: `PakSentinel_NB`, `PakSentinel_LR`, `PakSentinel_PolyLR
 
 ### 8.1 System Architecture
 
+![PakSentinel FastAPI System Architecture](figures/system_architecture.png)
+
 ```
 ┌─────────────────────────────────────────────────────┐
 │                   Client (HTTP)                      │
