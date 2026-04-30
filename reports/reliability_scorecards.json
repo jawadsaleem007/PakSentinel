@@ -1,0 +1,68 @@
+{
+  "LIAR": {
+    "Label Credibility": {
+      "score": 5,
+      "justification": "Labels from PolitiFact, a Pulitzer Prize-winning fact-checking organization. Human-annotated with 6-level granularity (pants-fire to true). Gold-standard in NLP misinformation research (Wang, 2017)."
+    },
+    "Recency": {
+      "score": 3,
+      "justification": "Dataset covers statements from 2007-2016. While political misinformation patterns remain relevant, the data predates recent social media misinformation trends (COVID-19, 2020+ elections). Still widely used as benchmark."
+    },
+    "Domain Relevance to Pakistan": {
+      "score": 2,
+      "justification": "Primarily US political statements. Linguistic patterns of misinformation (hedging, exaggeration, emotional language) transfer across domains, but Pakistan-specific political context is absent."
+    },
+    "Class Balance": {
+      "score": 4,
+      "justification": "Roughly balanced across 6 labels. After binary mapping (Real/Fake), balance is approximately 55/45. Minor variation but within acceptable thresholds."
+    },
+    "Language Consistency": {
+      "score": 4,
+      "justification": "Consistent English political statements. Short-form text (1-2 sentences). Minimal noise, no code-switching. Professional language throughout."
+    }
+  },
+  "FakeNewsNet": {
+    "Label Credibility": {
+      "score": 5,
+      "justification": "Labels derived from PolitiFact (fact-checking) and GossipCop (entertainment) professional fact-checking organizations. Published as academic benchmark by Shu et al. (2020) in their seminal FakeNewsNet paper."
+    },
+    "Recency": {
+      "score": 3,
+      "justification": "Dataset covers 2015-2018 news articles. Captures political misinformation patterns from the US election period. News classification patterns remain relevant for current analysis."
+    },
+    "Domain Relevance to Pakistan": {
+      "score": 2,
+      "justification": "US-centric news articles. However, the stylistic differences between real and fake news (sensationalism, source attribution, factual density) are language-universal features (Perez-Rosas et al., 2018)."
+    },
+    "Class Balance": {
+      "score": 3,
+      "justification": "PolitiFact subset has ~400 fake and ~400 real. GossipCop has ~5,000 fake and ~16,000 real. Combined and sampled to achieve balance."
+    },
+    "Language Consistency": {
+      "score": 4,
+      "justification": "News article titles from professional sources. Consistent formatting across PolitiFact and GossipCop subsets. English-only content with minimal noise."
+    }
+  },
+  "SarcasmHeadlines": {
+    "Label Credibility": {
+      "score": 5,
+      "justification": "Labels are inherently reliable: The Onion is a well-known satirical publication, and HuffPost is a mainstream news outlet. Source-level labeling eliminates human annotation error. Used in Misra & Grover (2021)."
+    },
+    "Recency": {
+      "score": 4,
+      "justification": "Headlines span 2012-2018, covering a broad temporal range. Satire patterns (irony, absurdity, exaggeration) are temporally stable linguistic features, making recency less critical for this class."
+    },
+    "Domain Relevance to Pakistan": {
+      "score": 2,
+      "justification": "US-centric satirical content. However, the assignment requires a Satire class and The Onion represents the gold standard for English satirical writing. Satirical linguistic features (irony markers, absurdity) transfer across cultural contexts."
+    },
+    "Class Balance": {
+      "score": 3,
+      "justification": "Dataset contains approximately 11,700 sarcastic and 14,900 non-sarcastic headlines. We only use the sarcastic subset for the Satire class. Balance with other classes is managed through strategic sampling."
+    },
+    "Language Consistency": {
+      "score": 4,
+      "justification": "Consistent headline format throughout. The Onion maintains high editorial quality for satire. Short-form text (headlines only) which may limit feature richness compared to full articles from other sources."
+    }
+  }
+}

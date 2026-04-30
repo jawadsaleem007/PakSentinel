@@ -1,0 +1,14 @@
+artifact_uri: file:///E:/Semester 7/NLP/assignment2/mlruns/363024969216089700/ac92e6228d204a81a2254666f5ca803d/artifacts
+end_time: 1777336732001
+entry_point_name: ''
+experiment_id: '363024969216089700'
+lifecycle_stage: active
+run_id: ac92e6228d204a81a2254666f5ca803d
+run_name: config_3
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1777336731259
+status: 3
+tags: []
+user_id: PC

@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# Logs
+logs/
+*.log
+pipeline_output.log
+task1_output.log
+test_output.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# MLflow trash
+mlruns/.trash/
+
+# Large data (keep small CSVs; ignore versioned snapshots)
+data/raw/20260428_053749/
+data/raw/20260428_053750/
+data/processed/v1.0/
+data/embeddings/v1.0/
+
+# Build outputs
+*.pdf
